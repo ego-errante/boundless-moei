@@ -392,9 +392,9 @@ install_cuda() {
             error "Failed to update package list for CUDA"
             exit $EXIT_DEPENDENCY_FAILED
         fi
-        if ! apt-get -o Dpkg::Options::="--force-confnew" install -y cuda-toolkit 2>&1; then
+        if ! DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confnew" install -y cuda-toolkit 2>&1; then
             error "Failed to install CUDA Toolkit"
-            if apt-get -o Dpkg::Options::="--force-confnew" install -y cuda-toolkit 2>&1 | grep -q "dpkg was interrupted"; then
+            if DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confnew" install -y cuda-toolkit 2>&1 | grep -q "dpkg was interrupted"; then
                 exit $EXIT_DPKG_ERROR
             fi
             exit $EXIT_DEPENDENCY_FAILED
